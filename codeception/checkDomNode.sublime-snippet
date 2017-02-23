@@ -1,0 +1,63 @@
+<snippet>
+    <content><![CDATA[
+<?php
+\$I = new AcceptanceTester(\$scenario);
+
+\$I->checkDomNode(\$I${1:, 30,}${2: 'return \$("#inpu-checkbox.ui-state-error").length'});
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>checkDomNode</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.php</scope>
+    <title>checkDomNode</title>
+    <docs><![CDATA[
+Checks for the temporary dom node when not present at an interval usually after being removed by ajax
+]]></docs>
+    <code><![CDATA[
+<?php
+namespace Helper;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+
+class Acceptance extends \Codeception\Module
+{
+    /**
+     * Checks for the temporary dom node when not present at an interval usually after being removed by ajax
+     * @param  object  $I       Codeception
+     * @param  integer $timeout Timout in seconds
+     * @param  string $executeJS Optional. Javascript code which when executed should return either truthy or falsy
+     * When the returned value is a positive result then this method assumes that the Ajax call is completed.
+     * Specific use case for this is when the Ajax script only updates dom properties rather than appending extra nodes.
+     * @example $("#input-check-box.ui-state-error").length;
+     * The example code above indicates that after an Ajax call adds a new class to the input element.
+     * @return boolean
+     */
+    public function checkDomNode($I, $timeout = 30, $executeJS = null)
+    {
+        $testNodeRemoved = false;
+        $counter = 0;
+        while(true){
+            codecept_debug('Timer: ' . date('h:i:s'));
+            sleep(1);
+            $testNodeRemoved = $I->executeJS('return !$(".temporary-dom-test-node").length');
+            if($testNodeRemoved) {
+                $I->executeJS('$(".temporary-dom-test-node").remove()');
+                break;
+            }
+            if ($executeJS && $I->executeJS($executeJS)) {
+                $testNodeRemoved = true;
+                $I->executeJS('$(".temporary-dom-test-node").remove()');
+                break;
+            }
+            if(++$counter >= $timeout) {
+                $this->assertTrue(false, "Timed out while waiting for DOM node to disappear");
+                break;
+            }
+        }
+        codecept_debug('End Time: ' . date('h:i:s'));
+
+        return $testNodeRemoved;
+    }
+}
+?>
+]]></code>
+</snippet>

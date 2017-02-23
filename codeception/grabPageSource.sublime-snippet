@@ -10,7 +10,7 @@
 codecept_debug(\$${2:response});
 ]]></content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>fwrite</tabTrigger>
+    <tabTrigger>grabPageSource</tabTrigger>
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.php</scope>
     <title>grabPageSource</title>
