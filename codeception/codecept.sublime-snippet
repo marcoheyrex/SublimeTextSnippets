@@ -1,0 +1,16 @@
+<snippet>
+    <content><![CDATA[
+codecept build && codecept run acceptance --debug --fail-fast --colors
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>codeceptrun</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.php</scope>
+    <title>codeceptrun — Build and Run Acceptance Test</title>
+    <docs><![CDATA[
+Codeception - Build and Run Acceptance Test
+]]></docs>
+    <code><![CDATA[
+codecept build && codecept run acceptance --debug --fail-fast --colors
+]]></code>
+</snippet>

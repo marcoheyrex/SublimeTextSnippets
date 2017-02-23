@@ -1,0 +1,36 @@
+<snippet>
+    <content><![CDATA[
+function TrimArray(\$${1:stringOrArrayValue}){
+
+    if (!is_array(\$${1:stringOrArrayValue}))
+        return trim(\$${1:stringOrArrayValue});
+
+    return array_map('TrimArray', \$${1:stringOrArrayValue});
+}
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>recursion</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.php</scope>
+    <title>recursion — Example Recursion</title>
+    <docs><![CDATA[
+Demonstrates recursion with array_map
+]]></docs>
+    <code><![CDATA[
+/**
+ * Trims a entire array recursivly.
+ *
+ * @author      Jonas John
+ * @version     0.2
+ * @link        http://www.jonasjohn.de/snippets/php/trim-array.htm
+ * @param       array      $stringOrArrayValue      Input array
+ */
+function TrimArray($stringOrArrayValue){
+
+    if (!is_array($stringOrArrayValue))
+        return trim($stringOrArrayValue);
+
+    return array_map('TrimArray', $stringOrArrayValue);
+}
+]]></code>
+</snippet>
