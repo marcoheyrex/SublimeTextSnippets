@@ -1,0 +1,40 @@
+<snippet>
+    <content><![CDATA[
+<?php
+\$I = new AcceptanceTester(\$scenario);
+
+//Call API HTTP Endpoint
+\$url = ${1:'http://localhost?json'};
+\$I->amOnUrl(\$url);
+\$${2:response} = array_pop(json_decode(\$I->grabPageSource(), true));
+codecept_debug(\$${2:response});
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>fwrite</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.php</scope>
+    <title>grabPageSource</title>
+    <docs><![CDATA[
+Gets the source code of the page
+]]></docs>
+    <code><![CDATA[
+<?php
+namespace Helper;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+
+class Acceptance extends \Codeception\Module
+{
+    /**
+     * Gets the source code of the page
+     * @return string
+     */
+    public function grabPageSource()
+    {
+        return $this->getModule('WebDriver')->webDriver->getPageSource();
+        // To strip tags and whitelist table tags
+        // return strip_tags($this->getModule('WebDriver')->webDriver->getPageSource(), '<table><tbody><tr><th><td>');
+    }
+}
+?>
+]]></code>
+</snippet>
